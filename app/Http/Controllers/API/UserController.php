@@ -34,6 +34,7 @@ class UserController extends Controller
                 ]
             );
 
+            // menggambil data pertama yang sesuai dengan kriteria
             $user = User::where('email', $request->email)->first();
 
             $tokenResult = $user->createToken('authToken')->plainTextToken;
@@ -118,7 +119,7 @@ class UserController extends Controller
     {
         $data = $request->all();
         $user = Auth::user();
-        $user->update($data);
+        $user->upadate($data);
 
         return ResponseFormatter::success(
             $user,

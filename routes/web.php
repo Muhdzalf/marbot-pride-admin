@@ -8,6 +8,7 @@ use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\ThemeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UstadzController;
+use App\Http\Middleware\IsAdmin;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,7 +26,7 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::group(["middleware" => ['auth:sanctum', 'verified',]], function () {
+Route::group(["middleware" => ['auth:sanctum', 'verified']], function () {
     Route::view('/dashboard', "dashboard")->name('dashboard');
 
     // User Route
@@ -81,3 +82,5 @@ Route::group(["middleware" => ['auth:sanctum', 'verified',]], function () {
     Route::view('/program/edit/{programId}', "pages.program.program-edit")->name('program.edit');
     Route::view('/program/detail/{programId}', 'pages.program.program-detail')->name('program.detail');
 });
+
+Route::view('/guest', "layouts.guest")->name('guest');

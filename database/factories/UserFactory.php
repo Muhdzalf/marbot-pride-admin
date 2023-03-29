@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Laravel\Jetstream\Features;
 
@@ -31,7 +32,8 @@ class UserFactory extends Factory
             'phone_number' => $this->faker->regexify('08[0-9]{9}'),
             // 'profile_photo_path' =>
             'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'password' => Hash::make('12345678'), // password
+            'role' => 'admin',
             'remember_token' => Str::random(10),
         ];
     }

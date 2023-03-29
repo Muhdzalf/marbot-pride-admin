@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schema;
 
 class AddFieldToTableUsers extends Migration
@@ -20,6 +21,10 @@ class AddFieldToTableUsers extends Migration
             $table->string('role', 15)->after('email')->default('user');
             $table->softDeletes();
         });
+
+        Artisan::call('db:seed', [
+            '--class' => UserSeeder::class
+        ]);
     }
 
     /**

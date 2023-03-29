@@ -21,6 +21,12 @@ class IsAdmin
         if (Auth::user() && Auth::user()->role == 'admin') {
             return $next($request);
         }
+
+        // if (Auth::user() && Auth::user()->role == 'user') {
+        //     session()->flash('errors','not_admin');
+        //     return redirect('/');
+        // }
+
         return redirect('/');
     }
 }
