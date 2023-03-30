@@ -10,6 +10,8 @@ class Kajian extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $table = 'kajian';
+
     protected $fillable = [
         'title',
         'description',

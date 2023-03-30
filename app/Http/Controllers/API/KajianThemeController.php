@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
 use App\Models\KajianTheme;
+use App\Models\Tema;
 use Illuminate\Http\Request;
 
 class KajianThemeController extends Controller
@@ -18,10 +19,10 @@ class KajianThemeController extends Controller
         $show_videos = $request->input('show_videos');
 
         if ($id) {
-            $kajian = KajianTheme::with(['videos', 'admin',])->find($id);
-            if ($kajian) {
+            $tema = Tema::with(['kajians'])->find($id);
+            if ($tema) {
                 return ResponseFormatter::success(
-                    $kajian,
+                    $tema,
                     'Data Kajian berhasil ditemukan'
                 );
             } else {
@@ -33,23 +34,31 @@ class KajianThemeController extends Controller
             }
         }
 
-        $kajian = KajianTheme::query()->with('admin');
+        $tema = Tema::query();
 
         if ($title) {
-            $kajian->where('title', 'like', '%' . $title . '%');
+            $tema->where('title', 'like', '%' . $title . '%');
         }
 
         if ($tag) {
-            $kajian->where('name', 'like', '%' . $tag . '%');
+            $tema->where('name', 'like', '%' . $tag . '%');
         }
 
         if ($show_videos) {
-            $kajian->with('videos');
+            $tema->with('kajians');
         }
 
-        return ResponseFormatter::success(
-            $kajian->paginate($limit),
-            'Data Kajian Berhasil diambil',
-        );
+        if ($tema->count() > 0) {
+            return ResponseFormatter::success(
+                $tema->paginate($limit),
+                'Data Tema Berhasil diambil',
+            );
+        } else {
+            return ResponseFormatter::error(
+                null,
+                'Data Tema Tidak ditemukan',
+                404
+            );
+        };
     }
 }

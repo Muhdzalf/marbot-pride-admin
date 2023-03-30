@@ -10,6 +10,7 @@ class Tema extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $table = 'tema';
     protected $fillable = [
         'title',
         'description',
