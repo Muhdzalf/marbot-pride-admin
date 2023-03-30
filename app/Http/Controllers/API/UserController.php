@@ -119,7 +119,7 @@ class UserController extends Controller
     {
         $data = $request->all();
         $user = Auth::user();
-        $user->upadate($data);
+        $user->update($data);
 
         return ResponseFormatter::success(
             $user,
