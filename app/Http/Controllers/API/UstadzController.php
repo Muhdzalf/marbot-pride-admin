@@ -17,7 +17,7 @@ class UstadzController extends Controller
         $show_video = $request->input('show_video');
 
         if ($id) {
-            $ustadz = Ustadz::with(['videos',])->find($id);
+            $ustadz = Ustadz::with(['kajians',])->find($id);
             if ($ustadz) {
                 return ResponseFormatter::success(
                     $ustadz,
@@ -39,12 +39,21 @@ class UstadzController extends Controller
         }
 
         if ($show_video) {
-            $ustadz->with('videos');
+            $ustadz->with('kajians');
         }
 
-        return ResponseFormatter::success(
-            $ustadz->paginate($limit),
-            'Data Ustadz berhasil diambil'
-        );
+        if ($ustadz->count() > 0) {
+            return ResponseFormatter::success(
+                $ustadz->paginate($limit),
+                'Data Ustadz berhasil diambil'
+            );
+        } else {
+
+            return ResponseFormatter::error(
+                null,
+                'Data Ustadz tidak ditemukan',
+                404
+            );
+        }
     }
 }
