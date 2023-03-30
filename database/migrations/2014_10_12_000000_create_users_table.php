@@ -1,7 +1,9 @@
 <?php
 
+use Facade\Ignition\Tabs\Tab;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schema;
 
 class CreateUsersTable extends Migration
@@ -17,13 +19,23 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('phone_number', 13);
+            $table->longText('about')->nullable();
+            $table->string('city', 35)->nullable();
+            $table->date('birth_date');
+            $table->string('role', 15)->default('user');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
             $table->timestamps();
+            $table->softdeletes();
         });
+
+        Artisan::call('db:seed', [
+            '--class' => UserSeeder::class
+        ]);
     }
 
     /**

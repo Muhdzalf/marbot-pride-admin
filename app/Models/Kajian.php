@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class KajianVideo extends Model
+class Kajian extends Model
 {
     use HasFactory, SoftDeletes;
 
@@ -18,9 +18,7 @@ class KajianVideo extends Model
         'video_url',
         'tag',
         'tema_id',
-        'admin_id',
         'ustadz_id',
-        'category_id',
     ];
 
     public static function search($query)
@@ -32,17 +30,12 @@ class KajianVideo extends Model
 
     public function donations()
     {
-        return $this->hasMany(Donation::class, 'video_id', 'id');
+        return $this->hasMany(Donation::class, 'kajian_id', 'id');
     }
 
     public function tema()
     {
         return $this->belongsTo(KajianTheme::class, 'tema_id', 'id');
-    }
-
-    public function admin()
-    {
-        return $this->belongsTo(User::class, 'admin_id', 'id');
     }
 
     public function ustadz()
@@ -52,6 +45,6 @@ class KajianVideo extends Model
 
     public function categories()
     {
-        return $this->belongsTo(Category::class, 'category_id', 'id');
+        return $this->hasMany(KajianCategory::class, 'kajian_id', 'íd');
     }
 }

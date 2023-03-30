@@ -19,7 +19,7 @@ class ProgramController extends Controller
         $show_donation = $request->input('show_donation');
 
         if ($id) {
-            $program = Program::with(['admin', 'donations'])->find($id);
+            $program = Program::with(['donations'])->find($id);
             if ($program) {
                 return ResponseFormatter::success(
                     $program,
@@ -34,7 +34,7 @@ class ProgramController extends Controller
             }
         }
 
-        $program = Program::with(['admin']);
+        $program = Program::query();
 
         if ($name) {
             $program->where('name', 'like', '%' . $name . '%');
@@ -51,9 +51,17 @@ class ProgramController extends Controller
             $program->with('donations');
         }
 
-        return ResponseFormatter::success(
-            $program->paginate($limit),
-            'Data List Video Berhasil diambil'
-        );
+        if ($program->count() > 0) {
+            return ResponseFormatter::success(
+                $program->paginate($limit),
+                'Data List Video Berhasil diambil'
+            );
+        } else {
+            return ResponseFormatter::error(
+                null,
+                'Data Program Tidak ditemukan',
+                404
+            );
+        };
     }
 }

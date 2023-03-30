@@ -20,7 +20,8 @@ class CreateProgramsTable extends Migration
             $table->integer('target_donation');
             $table->string('trailer_url')->nullable();
             $table->string('status', 15)->default('ongoing');
-            $table->bigInteger('admin_id');
+            $table->string('poster_url');
+
             $table->softDeletes();
 
             $table->timestamps();

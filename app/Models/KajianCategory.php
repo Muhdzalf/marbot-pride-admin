@@ -4,19 +4,20 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class VideoCategory extends Model
+class KajianCategory extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'video_id',
+        'kajian_id',
         'category_id',
     ];
 
     public function video()
     {
-        return $this->belongsTo(Video::class, 'video_id');
+        return $this->belongsTo(Kajian::class, 'kajian_id', 'id');
     }
 
     public function category()

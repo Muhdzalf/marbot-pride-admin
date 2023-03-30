@@ -17,7 +17,7 @@ class CategoryController extends Controller
         $show_videos = $request->input('show_videos');
 
         if ($id) {
-            $category = Category::with(['kajians', 'videos'])->find($id);
+            $category = Category::with(['kajians'])->find($id);
 
             if ($category) {
                 return ResponseFormatter::success(
@@ -43,9 +43,17 @@ class CategoryController extends Controller
             $category->with('videos');
         }
 
-        return ResponseFormatter::success(
-            $category->paginate($limit),
-            'Data Kategori berhasil Diambil'
-        );
+        if ($category->count() > 0) {
+            return ResponseFormatter::success(
+                $category->paginate($limit),
+                'Data Kategori berhasil Diambil'
+            );
+        } else {
+            return ResponseFormatter::error(
+                null,
+                'Data Tidak Ditemukan!',
+                404
+            );
+        }
     }
 }

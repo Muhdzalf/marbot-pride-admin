@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class KajianTheme extends Model
+class Tema extends Model
 {
     use HasFactory, SoftDeletes;
 
@@ -15,7 +15,6 @@ class KajianTheme extends Model
         'description',
         'poster_url',
         'tag',
-        'admin_id'
     ];
 
     public static function search($query)
@@ -26,13 +25,8 @@ class KajianTheme extends Model
     }
 
 
-    public function videos()
+    public function kajians()
     {
-        return $this->hasMany(KajianVideo::class, 'tema_id', 'id');
-    }
-
-    public function admin()
-    {
-        return $this->belongsTo(User::class, 'admin_id', 'id');
+        return $this->hasMany(Kajian::class, 'tema_id', 'id');
     }
 }

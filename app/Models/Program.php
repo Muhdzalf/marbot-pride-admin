@@ -16,7 +16,6 @@ class Program extends Model
         'trailer_url',
         'poster_url',
         'status',
-        'admin_id'
     ];
 
     public static function search($query)
@@ -27,11 +26,6 @@ class Program extends Model
                 'like',
                 '%' . $query . '%'
             );
-    }
-
-    public function admin()
-    {
-        return $this->belongsTo(User::class, 'admin_id', 'id');
     }
 
     public function donations()

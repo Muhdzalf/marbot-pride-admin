@@ -15,7 +15,22 @@ class CategorySeeder extends Seeder
     public function run()
     {
         DB::table('categories')->insert(
-            ['name' => 'Ibadah', 'description' => 'kajian mengenai segala sesuatu tentang ibadah']
+            [
+                'name' => 'Shalat',
+                'description' => 'kajian mengenai shalat'
+            ],
+        );
+        DB::table('categories')->insert(
+            [
+                'name' => 'Sejarah',
+                'description' => 'kajian mengenai sejarah'
+            ],
+        );
+        DB::table('categories')->insert(
+            [
+                'name' => 'Taqwa',
+                'description' => 'kajian mengenai taqwa'
+            ],
         );
     }
 }

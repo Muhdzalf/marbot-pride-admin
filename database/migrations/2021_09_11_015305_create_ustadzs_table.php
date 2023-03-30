@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddFieldToKajianVideosTable extends Migration
+class CreateUstadzsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,13 @@ class AddFieldToKajianVideosTable extends Migration
      */
     public function up()
     {
-        Schema::table('Kajian_videos', function (Blueprint $table) {
-            $table->bigInteger('category_id')->nullable()->after('description');
+        Schema::create('ustadzs', function (Blueprint $table) {
+            $table->id();
+            $table->string('name', 35);
+            $table->longtext('description');
+            $table->string('poster_url');
+            $table->softDeletes();
+            $table->timestamps();
         });
     }
 
@@ -25,8 +30,6 @@ class AddFieldToKajianVideosTable extends Migration
      */
     public function down()
     {
-        Schema::table('Kajian_videos', function (Blueprint $table) {
-            $table->dropColumn('category_id');
-        });
+        Schema::dropIfExists('ustadzs');
     }
 }

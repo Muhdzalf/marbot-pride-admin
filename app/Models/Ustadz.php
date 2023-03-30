@@ -21,8 +21,8 @@ class Ustadz extends Model
             : static::where('name', 'like', '%' . $query . '%');
     }
 
-    public function videos()
+    public function kajians()
     {
-        return $this->hasMany(KajianVideo::class, 'ustadz_id', 'id');
+        return $this->hasMany(Kajian::class, 'ustadz_id', 'id');
     }
 }

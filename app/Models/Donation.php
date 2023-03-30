@@ -11,33 +11,14 @@ class Donation extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'user_id',
-        'method_id',
-        'video_id',
-        'program_id',
-        'donation',
         'status',
+        'nominal',
+        'method_id',
+        'user_id',
+        'itemable_id',
+        'itemable_type',
     ];
 
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'user_id', 'id');
-    }
-
-    public function method()
-    {
-        return $this->belongsTo(DonationMethod::class, 'method_id', 'id');
-    }
-
-    public function video()
-    {
-        return $this->belongsTo(KajianVideo::class, 'video_id', 'id');
-    }
-
-    public function programs()
-    {
-        return $this->belongsTo(Program::class, 'program_id', 'id');
-    }
 
     public static function search($query)
     {
@@ -47,5 +28,15 @@ class Donation extends Model
                 'like',
                 '%' . $query . '%'
             );
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function details()
+    {
+        return $this->hasOne(DonationDetails::class, 'donation_id', 'id');
     }
 }

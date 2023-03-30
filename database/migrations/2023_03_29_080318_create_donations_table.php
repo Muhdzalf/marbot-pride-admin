@@ -15,13 +15,24 @@ class CreateDonationsTable extends Migration
     {
         Schema::create('donations', function (Blueprint $table) {
             $table->id();
-
-            $table->bigInteger('user_id');
-            $table->bigInteger('method_id');
-            $table->bigInteger('video_id')->nullable();
-            $table->bigInteger('program_id')->nullable();
-            $table->integer('donation');
             $table->string('status')->default('pending');
+            $table->integer('nominal');
+
+            //foreign key to method
+            $table->unsignedbigInteger('method_id');
+            $table->foreign('method_id')->on('donation_methods')->references('id')->cascadeOnDelete()->cascadeOnUpdate();
+
+            //foreign key to user_id
+            $table->unsignedbigInteger('user_id');
+            $table->foreign('user_id')->on('users')->references('id')->cascadeOnDelete()->cascadeOnUpdate();
+
+            //foreign key to item
+            $table->unsignedBigInteger('itemable_id');
+
+            $table->string('itemable_type', 10);
+
+            $table->index(['itemable_id', 'itemable_type']);
+
             $table->softDeletes();
             $table->timestamps();
         });

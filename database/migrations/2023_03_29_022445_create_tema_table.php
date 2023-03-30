@@ -3,9 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use phpDocumentor\Reflection\Types\Nullable;
 
-class CreateKajianThemesTable extends Migration
+class CreateTemaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,13 +13,12 @@ class CreateKajianThemesTable extends Migration
      */
     public function up()
     {
-        Schema::create('kajian_themes', function (Blueprint $table) {
+        Schema::create('tema', function (Blueprint $table) {
             $table->id();
             $table->string('title', 50);
             $table->longText('description');
             $table->string('poster_url')->nullable();
             $table->string('tag', 25)->nullable();
-            $table->bigInteger('admin_id');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -33,6 +31,6 @@ class CreateKajianThemesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('kajian_themes');
+        Schema::dropIfExists('tema');
     }
 }

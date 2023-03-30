@@ -21,8 +21,8 @@ class Category extends Model
             : static::where('name', 'like', '%' . $query . '%');
     }
 
-    public function videos()
+    public function kajians()
     {
-        return $this->hasMany(KajianVideo::class, 'category_id', 'id');
+        return $this->hasMany(KajianCategory::class, 'category_id', 'id');
     }
 }

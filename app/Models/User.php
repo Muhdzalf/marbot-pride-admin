@@ -70,27 +70,8 @@ class User extends Authenticatable
             ->orWhere('email', 'like', '%' . $query . '%');
     }
 
-    public function temas()
-    {
-        return $this->hasMany(KajianTheme::class, 'admin_id', 'id');
-    }
-
     public function donations()
     {
         return $this->hasMany(Donation::class, 'user_id', 'id');
-    }
-
-    public function videos()
-    {
-        return $this->hasMany(
-            KajianVideo::class,
-            'admin_id',
-            'id'
-        );
-    }
-
-    public function programs()
-    {
-        return $this->hasMany(Program::class, 'admin_id', 'id');
     }
 }
