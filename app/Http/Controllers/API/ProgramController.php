@@ -54,7 +54,7 @@ class ProgramController extends Controller
         if ($program->count() > 0) {
             return ResponseFormatter::success(
                 $program->paginate($limit),
-                'Data List Video Berhasil diambil'
+                'Data List Program Berhasil diambil'
             );
         } else {
             return ResponseFormatter::error(
