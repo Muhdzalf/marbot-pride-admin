@@ -27,9 +27,8 @@ class CreateDonationsTable extends Migration
             $table->foreign('user_id')->on('users')->references('id')->cascadeOnDelete()->cascadeOnUpdate();
 
             //foreign key to item
-            $table->unsignedBigInteger('itemable_id');
-
-            $table->string('itemable_type', 10);
+            $table->integer('itemable_id');
+            $table->string('itemable_type', 30);
 
             $table->index(['itemable_id', 'itemable_type']);
 

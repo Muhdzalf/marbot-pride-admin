@@ -30,6 +30,6 @@ class Program extends Model
 
     public function donations()
     {
-        return $this->hasMany(Donation::class, 'program_id', 'id');
+        return $this->morphMany(Donation::class, 'itemable');
     }
 }

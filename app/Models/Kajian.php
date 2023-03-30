@@ -32,7 +32,7 @@ class Kajian extends Model
 
     public function donations()
     {
-        return $this->hasMany(Donation::class, 'kajian_id', 'id');
+        return $this->morphMany(Donation::class, 'itemable');
     }
 
     public function tema()

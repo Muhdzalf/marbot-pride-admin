@@ -35,8 +35,13 @@ class Donation extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    public function details()
+    public function method()
     {
-        return $this->hasOne(DonationDetails::class, 'donation_id', 'id');
+        return $this->belongsTo(DonationMethod::class, 'method_id', 'id');
+    }
+
+    public function itemable()
+    {
+        return $this->morphTo();
     }
 }
