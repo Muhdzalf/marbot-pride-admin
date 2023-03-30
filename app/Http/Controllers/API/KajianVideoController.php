@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
-use App\Models\KajianVideo;
+use App\Models\Kajian;
 use Illuminate\Http\Request;
 
 class KajianVideoController extends Controller
@@ -15,15 +15,18 @@ class KajianVideoController extends Controller
         $title = $request->input('title');
         $tag = $request->input('tag');
         $limit = $request->input('limit');
-        $show_kajian = $request->input('show_kajian');
+        $show_tema = $request->input('show_tema');
         $categories = $request->input('categories');
         $show_donation = $request->input('show_donation');
 
+        $show_tema = $request->input('show_tema');
+        $show_ustadz = $request->input('show_ustadz');
+
         if ($id) {
-            $video = KajianVideo::with(['donations',])->find($id);
-            if ($video) {
+            $kajian = Kajian::with(['tema', 'ustadz'])->find($id);
+            if ($kajian) {
                 return ResponseFormatter::success(
-                    $video,
+                    $kajian,
                     'Data Video berhasil diambil'
                 );
             } else {
@@ -35,30 +38,39 @@ class KajianVideoController extends Controller
             }
         }
 
-        $video = KajianVideo::with(['categories',]);
+        $kajian = Kajian::with(['categories',]);
 
         if ($title) {
-            $video->where('title', 'like', '%' . $title . '%');
+            $kajian->where('title', 'like', '%' . $title . '%');
         }
 
         if ($tag) {
-            $video->where('tag', 'like', '%' . $tag . '%');
+            $kajian->where('tag', 'like', '%' . $tag . '%');
         }
 
-        if ($show_kajian) {
-            $video->with('kajian');
+        if ($show_tema) {
+            $kajian->with('tema');
         }
 
         if ($categories) {
-            $video->where('video', $categories);
-        }
-        if ($show_donation) {
-            $video->with('donations');
+            $kajian->where('video', $categories);
         }
 
-        return ResponseFormatter::success(
-            $video->paginate($limit),
-            'Data List Video Berhasil diambil'
-        );
+        if ($show_donation) {
+            $kajian->with('donations');
+        }
+
+        if ($kajian->count() > 0) {
+            return ResponseFormatter::success(
+                $kajian->paginate($limit),
+                'Data List Kajian Berhasil diambil'
+            );
+        } else {
+            return ResponseFormatter::error(
+                null,
+                'Data Kajian tidak ditemukan',
+                404
+            );
+        }
     }
 }

@@ -37,7 +37,7 @@ class Kajian extends Model
 
     public function tema()
     {
-        return $this->belongsTo(KajianTheme::class, 'tema_id', 'id');
+        return $this->belongsTo(Tema::class, 'tema_id', 'id');
     }
 
     public function ustadz()
