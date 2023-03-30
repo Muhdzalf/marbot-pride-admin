@@ -13,12 +13,12 @@ class DonationMethodController extends Controller
     public function all(Request $request)
     {
         $id = $request->input('id');
-        $name = $request->input('id');
+        $name = $request->input('nama');
         $limit = $request->input('limit');
-        $show_donation = $request->input('show_donation');
+        // $show_donation = $request->input('show_donation');
 
         if ($id) {
-            $method = DonationMethod::with(['donations'])->find($id);
+            $method = DonationMethod::find($id);
 
             if ($method) {
                 return ResponseFormatter::success(
@@ -40,13 +40,21 @@ class DonationMethodController extends Controller
             $method->where('name', 'like', '%' . $name . '%');
         }
 
-        if ($show_donation) {
-            $method->with('donations');
-        }
+        // if ($show_donation) {
+        //     $method->with('donations');
+        // }
 
-        return ResponseFormatter::success(
-            $method->paginate($limit),
-            'Data Metode berhasil diambil'
-        );
+        if ($method->count() > 0) {
+            return ResponseFormatter::success(
+                $method->paginate($limit),
+                'Data Metode berhasil diambil'
+            );
+        } else {
+            return ResponseFormatter::error(
+                null,
+                'Data Metode tidak ditemukan',
+                404
+            );
+        }
     }
 }

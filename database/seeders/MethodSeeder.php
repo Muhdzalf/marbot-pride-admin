@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\DonationMethod;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -14,9 +15,17 @@ class MethodSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('donation_methods')->insert(
+        DonationMethod::create(
             [
-                'name' => 'Bank Transfer'
+                'name' => 'Bank Transfer',
+                'description' => 'Transfer dari berbagai bank'
+            ],
+        );
+
+        DonationMethod::create(
+            [
+                'name' => 'Qris',
+                'description' => 'Transfer dari qris'
             ],
         );
     }
